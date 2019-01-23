@@ -39,6 +39,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbPixel = new System.Windows.Forms.RadioButton();
             this.rbHaara = new System.Windows.Forms.RadioButton();
+            this.rbHist = new System.Windows.Forms.RadioButton();
+            this.rbHamm = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -97,7 +99,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(777, 497);
+            this.button4.Location = new System.Drawing.Point(1227, 499);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(119, 23);
             this.button4.TabIndex = 5;
@@ -107,28 +109,30 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbHamm);
+            this.panel1.Controls.Add(this.rbHist);
             this.panel1.Controls.Add(this.rbHaara);
             this.panel1.Controls.Add(this.rbPixel);
             this.panel1.Location = new System.Drawing.Point(462, 488);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(309, 23);
+            this.panel1.Size = new System.Drawing.Size(559, 34);
             this.panel1.TabIndex = 6;
             // 
             // rbPixel
             // 
             this.rbPixel.AutoSize = true;
-            this.rbPixel.Location = new System.Drawing.Point(3, 6);
+            this.rbPixel.Location = new System.Drawing.Point(7, 8);
             this.rbPixel.Name = "rbPixel";
             this.rbPixel.Size = new System.Drawing.Size(156, 17);
             this.rbPixel.TabIndex = 0;
-            this.rbPixel.TabStop = true;
             this.rbPixel.Text = "Попиксельное сравнение";
             this.rbPixel.UseVisualStyleBackColor = true;
             // 
             // rbHaara
             // 
             this.rbHaara.AutoSize = true;
-            this.rbHaara.Location = new System.Drawing.Point(201, 3);
+            this.rbHaara.Checked = true;
+            this.rbHaara.Location = new System.Drawing.Point(177, 9);
             this.rbHaara.Name = "rbHaara";
             this.rbHaara.Size = new System.Drawing.Size(56, 17);
             this.rbHaara.TabIndex = 1;
@@ -136,11 +140,31 @@
             this.rbHaara.Text = "Хаара";
             this.rbHaara.UseVisualStyleBackColor = true;
             // 
+            // rbHist
+            // 
+            this.rbHist.AutoSize = true;
+            this.rbHist.Location = new System.Drawing.Point(255, 8);
+            this.rbHist.Name = "rbHist";
+            this.rbHist.Size = new System.Drawing.Size(95, 17);
+            this.rbHist.TabIndex = 2;
+            this.rbHist.Text = "Гистограммы";
+            this.rbHist.UseVisualStyleBackColor = true;
+            // 
+            // rbHamm
+            // 
+            this.rbHamm.AutoSize = true;
+            this.rbHamm.Location = new System.Drawing.Point(404, 8);
+            this.rbHamm.Name = "rbHamm";
+            this.rbHamm.Size = new System.Drawing.Size(137, 17);
+            this.rbHamm.TabIndex = 3;
+            this.rbHamm.Text = "РасстоянияХэмминга";
+            this.rbHamm.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1358, 519);
+            this.ClientSize = new System.Drawing.Size(1358, 534);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.pictureBox2);
@@ -170,6 +194,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton rbHaara;
         private System.Windows.Forms.RadioButton rbPixel;
+        private System.Windows.Forms.RadioButton rbHist;
+        private System.Windows.Forms.RadioButton rbHamm;
     }
 }
 

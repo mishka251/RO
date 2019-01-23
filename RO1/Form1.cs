@@ -15,6 +15,7 @@ namespace RO1
             detector = new MyDetector();
             capture = new VideoCapture(CaptureType.Any);
             timer1.Start();
+            dt = distTypy.Haar;
         }
 
         MyDetector detector;
@@ -23,13 +24,13 @@ namespace RO1
         private void button1_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
-
+            setDt();
             var image = capture.QueryFrame().ToImage<Rgb, byte>();
 
             pictureBox1.Image = image.Bitmap;
             try
             {
-                detector.ProcessImage(image);
+                detector.ProcessImage(image, dt);
             }
             catch (Exception ex)
             {
@@ -44,11 +45,24 @@ namespace RO1
             detector.Save();
         }
 
+        distTypy dt;
+
+        void setDt()
+        {
+            if (rbHaara.Checked)
+                dt = distTypy.Haar;
+            if (rbHamm.Checked)
+                dt = distTypy.Hamm;
+            if (rbHist.Checked)
+                dt = distTypy.Hist;
+            if (rbPixel.Checked)
+                dt = distTypy.Pixel;
+        }
 
         private void button3_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
-
+            setDt();
             OpenFileDialog ofd = new OpenFileDialog();
             if (ofd.ShowDialog() != DialogResult.OK) return;
 
@@ -59,7 +73,7 @@ namespace RO1
             pictureBox1.Image = image.Bitmap;
             try
             {
-                detector.ProcessImage(image);
+                detector.ProcessImage(image, dt);
             }
             catch (Exception ex)
             {

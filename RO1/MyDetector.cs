@@ -35,7 +35,7 @@ namespace RO1
 
         }
 
-        public void ProcessImage(Image<Rgb, byte> image)
+        public void ProcessImage(Image<Rgb, byte> image, distTypy dt)
         {
             image.Save("image.jpg");
             var eyes = SearchEye(image);
@@ -46,7 +46,7 @@ namespace RO1
             {
                 System.Drawing.Color color = System.Drawing.Color.Green;
 
-                if (checkEye(eye) == State.Closed)
+                if (checkEye(eye, dt) == State.Closed)
                     color = System.Drawing.Color.Red;
                 else
                     color = System.Drawing.Color.Green;
@@ -196,17 +196,17 @@ namespace RO1
         /// </summary>
         /// <param name="eye">Картинка с глазом</param>
         /// <returns></returns>
-        public State checkEye(Image<Gray, byte> eye)
+        public State checkEye(Image<Gray, byte> eye, distTypy dt)
         {
             eye.ROI = new System.Drawing.Rectangle(0, 0, 60, 60);
             double open_range = double.MaxValue,// ImageComparer.dist2(eye, OpenEyes[0]), //eye.AbsDiff(OpenEyes[0]).CountNonzero().Sum(),
                 close_range = double.MaxValue; //ImageComparer.dist2(eye, CloseEyes[0]);// eye.AbsDiff(CloseEyes[0]).CountNonzero().Sum(); ;
 
             for (int i = 0; i < OpenEyes.Count; i++)
-                open_range = Math.Min(ImageComparer.HaarDistance(eye, OpenEyes[i]), open_range);
+                open_range = Math.Min(ImageComparer.dist(eye, OpenEyes[i], dt), open_range);
 
             for (int i = 0; i < CloseEyes.Count; i++)
-                close_range = Math.Min(ImageComparer.HaarDistance(eye, CloseEyes[i]), close_range);
+                close_range = Math.Min(ImageComparer.dist(eye, CloseEyes[i], dt), close_range);
 
             return close_range < open_range ? State.Closed : State.Opened;
         }
