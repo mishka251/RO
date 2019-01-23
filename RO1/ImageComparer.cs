@@ -131,131 +131,17 @@ namespace RO1
         /// Размер картинки для сравнения
         /// </summary>
         const int size = 20;
-        /// <summary>
-        /// Предобработка картинки
-        /// 1)преобразуем в серый
-        /// 2)обрезаем белое вокруг
-        /// 3)приводим к размеру size x size
-        /// </summary>
-        /// <param name="img">исходная картинка</param>
-        /// <returns>Обрезанная серая картинка</returns>
-        public static Image<Gray, byte> predObr(Image<Rgb, byte> img)
-        {
-            var gray1 = img.Mat.ToImage<Gray, byte>();
-
-            int minx = 0, miny = 0, maxx = gray1.Width, maxy = gray1.Height;
-
-            for (int i = 0; i < gray1.Width; i++)
-            {
-                bool stop = false;
-                for (int j = 0; j < gray1.Height; j++)
-                    if (gray1[j, i].Intensity < 200)
-                    {
-
-                        stop = true;
-                        break;
-                    }
-                if (stop)
-                {
-                    minx = i;
-                    break;
-                }
-            }
-
-            for (int i = 0; i < gray1.Height; i++)
-            {
-                bool stop = false;
-                for (int j = 0; j < gray1.Width; j++)
-                    if (gray1[i, j].Intensity < 200)
-                    {
-
-                        stop = true;
-                        break;
-                    }
-                if (stop)
-                {
-                    miny = i;
-                    break;
-                }
-            }
-
-            for (int i = gray1.Height - 1; i >= 0; i--)
-            {
-                bool stop = false;
-                for (int j = 0; j < gray1.Width; j++)
-                    if (gray1[i, j].Intensity < 200)
-                    {
-
-                        stop = true;
-                        break;
-                    }
-                if (stop)
-                {
-                    maxy = i;
-                    break;
-                }
-            }
-
-            for (int i = gray1.Width - 1; i >= 0; i--)
-            {
-                bool stop = false;
-                for (int j = 0; j < gray1.Height; j++)
-                    if (gray1[j, i].Intensity < 200)
-                    {
-
-                        stop = true;
-                        break;
-                    }
-                if (stop)
-                {
-                    maxx = i;
-                    break;
-                }
-            }
-
-            gray1.ROI = new System.Drawing.Rectangle(minx, miny, maxx - minx, maxy - miny);
-
-            return gray1.Resize(size, size, Inter.Linear);
-
-        }
 
         /// <summary>
         /// Простая предобработка(не используется)
-        /// Перегоняем изображение в серое и меняем размер до 50х50
+        /// Перегоняем изображение в серое и меняем размер до size x size
         /// </summary>
         /// <param name="img"></param>
         /// <returns></returns>
-        public static Image<Gray, byte> predObr2(Image<Rgb, byte> img)
+        public static Image<Gray, byte> predObr(Image<Rgb, byte> img)
         {
             var gray1 = img.Mat.ToImage<Gray, byte>();
             return gray1.Resize(size, size, Inter.Linear);
-        }
-        /// <summary>
-        /// расстояние(вариант1) не используется
-        /// </summary>
-        /// <param name="A">картинка 1</param>
-        /// <param name="B">картинка 2</param>
-        /// <returns></returns>
-        public static double dist1(Image<Rgb, byte> A, Image<Rgb, byte> B)
-        {
-            var resize1 = predObr2(A);
-            var resize2 = predObr2(B);
-
-            return distPix(resize1, resize2);
-        }
-        /// <summary>
-        /// Расстояние 2
-        /// </summary>
-        /// <param name="A"></param>
-        /// <param name="B"></param>
-        /// <returns></returns>
-        public static double dist2(Image<Rgb, byte> A, Image<Rgb, byte> B)
-        {
-
-            var resize1 = predObr(A);
-            var resize2 = predObr(B);
-
-            return distPix(resize1, resize2);
         }
 
         /// <summary>
@@ -386,9 +272,7 @@ namespace RO1
         /// <param name="im2">Вторая картинка</param>
         /// <returns></returns>
         public static double HaarDistance(Image<Gray, byte> im1, Image<Gray, byte> im2)
-
         {
-            double d = double.MaxValue;
 
             var img1 = im1.Integral();//перегоняем в даблы
             var img2 = im2.Integral();
